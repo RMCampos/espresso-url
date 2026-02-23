@@ -124,6 +124,19 @@ function App() {
         </Row>
       </Container>
 
+      {/* Version Footer */}
+      <div className="position-fixed bottom-0 start-50 translate-middle-x p-2">
+        <a 
+          href="https://github.com/RMCampos/espresso-url/pkgs/container/espresso-url/frontend" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-muted text-decoration-none transition-all footer-link"
+          style={{ fontSize: '0.75rem', opacity: 0.6 }}
+        >
+          {import.meta.env.VITE_BUILD || 'vdev'}
+        </a>
+      </div>
+
       {/* Simple inline styles for animations since we aren't using an external CSS file for custom styles yet */}
       <style>{`
         .slide-up-animation {
