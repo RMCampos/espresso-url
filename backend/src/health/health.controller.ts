@@ -11,6 +11,7 @@ export class HealthController {
 
   @Get()
   async check() {
+    const buildVersion = process.env.BUILD_VERSION;
     let databaseStatus = 'DOWN';
     try {
       await this.prisma.$queryRawUnsafe('SELECT 1');
@@ -26,6 +27,7 @@ export class HealthController {
     return {
       status: 'UP',
       database: databaseStatus,
+      buildVersion,
     };
   }
 }

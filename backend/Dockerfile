@@ -1,43 +1,3 @@
-# # Base image
-# FROM node:22-alpine AS base
-# WORKDIR /usr/src/app
-# # Need openssl for Prisma
-# RUN apk add --no-cache openssl
-
-# # Dependencies
-# FROM base AS dependencies
-# COPY package.json package-lock.json ./
-# # Install all dependencies (including devDependencies for build)
-# RUN npm ci
-
-# # Builder
-# FROM base AS builder
-# # Copy dependencies
-# COPY --from=dependencies /usr/src/app/node_modules ./node_modules
-# # Copy source code and Prisma schema
-# COPY . .
-# # Generate Prisma Client
-# RUN npx prisma generate
-# # Build the application
-# RUN npm run build
-# # Copy generated Prisma Client to dist since nest build ignores non-TS files
-# RUN cp -r src/generated dist/generated
-# # Prune devDependencies to keep the production image small
-# RUN npm prune --omit=dev
-
-# # Production
-# FROM base AS production
-# ENV NODE_ENV=production
-# # Copy only necessary files
-# COPY --from=builder /usr/src/app/node_modules ./node_modules
-# COPY --from=builder /usr/src/app/dist ./dist
-# COPY --from=builder /usr/src/app/prisma ./prisma
-# COPY --from=builder /usr/src/app/package.json ./package.json
-
-# EXPOSE 3000
-
-# # Start the application
-# CMD ["npm", "run", "start:prod"]
 # 1. Base Stage
 FROM node:22-slim AS base
 ENV DIR=/usr/src/app
@@ -64,6 +24,8 @@ RUN npm prune --omit=dev
 
 # 4. Production Stage (The "Runtime")
 FROM base AS production
+ARG BUILD_VERSION
+ENV BUILD_VERSION=${BUILD_VERSION}
 ENV NODE_ENV=production
 USER node
 
