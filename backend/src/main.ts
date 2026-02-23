@@ -14,18 +14,7 @@ async function bootstrap() {
       new FastifyAdapter(),
     );
 
-  const allowedOrigins = [
-    'http://localhost:3000',
-    'http://localhost:5173',
-  ];
-
-  if (process.env.FRONTEND_URL) {
-    allowedOrigins.push(process.env.FRONTEND_URL);
-  }
-
-  if (process.env.SERVER_URL) {
-    allowedOrigins.push(process.env.SERVER_URL);
-  }
+  const allowedOrigins = ['http://localhost:5173'];
 
   app.enableCors({
     origin: allowedOrigins,

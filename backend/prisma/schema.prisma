@@ -9,12 +9,12 @@ datasource db {
 }
 
 model myentity {
-  id    BigInt  @id
+  id    Int  @id
   field String? @db.VarChar(255)
 }
 
 model urlmapping {
-  id          BigInt   @id @default(autoincrement())
+  id          Int   @id @default(autoincrement())
   originalUrl String   @db.VarChar(2048)
   shortCode   String   @db.VarChar(10) @unique
   createdAt   DateTime @default(now()) @db.Timestamp(6)

@@ -1,4 +1,8 @@
-import { Controller, Get, InternalServerErrorException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Controller('health')

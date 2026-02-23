@@ -2,7 +2,7 @@ import { Expose } from 'class-transformer';
 
 export class UrlMappingResponseDto {
   @Expose()
-  id: bigint;
+  id: number;
 
   @Expose()
   originalUrl: string;
