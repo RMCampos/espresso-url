@@ -31,7 +31,7 @@ jobs:
         id: version
         run: |
           DATE=$(date +'%Y.%m.%d')
-          TAG="v${DATE}.${{ github.run_number }}"
+          TAG="api-v${DATE}.${{ github.run_number }}"
           echo "tag=${TAG}" >> $GITHUB_OUTPUT
           echo "Generated tag: ${TAG}"
 
@@ -50,7 +50,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository }}/backend
-          tags:
+          tags: |
             type=raw,value=${{ steps.version.outputs.tag }}
             type=raw,value=latest,enable={{ is_default_branch }}
 
