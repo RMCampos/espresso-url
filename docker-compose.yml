@@ -28,7 +28,8 @@ services:
       DATABASE_URL: postgresql://quarkus:quarkus@postgres:5432/urldb?schema=public
       BUILD_VERSION: v1.0.0
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "node", "healthcheck.js"]
       interval: 5s

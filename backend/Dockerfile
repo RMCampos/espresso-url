@@ -31,6 +31,7 @@ USER node
 
 # Copy only what's strictly necessary for the JVM-like runtime
 COPY healthcheck.js ./
+COPY --from=builder --chown=node:node $DIR/prisma ./prisma
 COPY --from=builder --chown=node:node $DIR/node_modules ./node_modules
 COPY --from=builder --chown=node:node $DIR/dist ./dist
 COPY --from=builder --chown=node:node $DIR/prisma-generated ./prisma-generated
