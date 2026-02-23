@@ -38,10 +38,11 @@ services:
   frontend:
     build:
       context: ./frontend
+      args:
+        VITE_BUILD: v1.0.0
     container_name: url-frontend
     environment:
       VITE_SERVER_URL: http://backend:3000
-      VITE_BUILD: v1.0.0
     ports:
       - "5173:80"
     depends_on:

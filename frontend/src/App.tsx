@@ -127,7 +127,7 @@ function App() {
       {/* Version Footer */}
       <div className="position-fixed bottom-0 start-50 translate-middle-x p-2">
         <a 
-          href="https://github.com/RMCampos/espresso-url/pkgs/container/espresso-url/frontend" 
+          href="https://github.com/RMCampos/espresso-url/pkgs/container/espresso-url%2Ffrontend" 
           target="_blank" 
           rel="noopener noreferrer"
           className="text-muted text-decoration-none transition-all footer-link"
