@@ -63,6 +63,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             VITE_BUILD=${{ steps.version.outputs.tag }}
+            VITE_SERVER_URL=${{ vars.VITE_SERVER_URL }}
 
       - name: Create and push Git tag
         run: |
