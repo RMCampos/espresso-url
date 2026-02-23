@@ -23,7 +23,7 @@ jobs:
           node-version: 20.x
           cache: 'npm'
           cache-dependency-path: backend/package-lock.json
-      - run: npm ci
+      - run: npm i
       - run: npm run lint
       - run: npm run build
 
