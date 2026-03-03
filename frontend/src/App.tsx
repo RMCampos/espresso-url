@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
 import { FaLink, FaCopy, FaCheck } from 'react-icons/fa';
 
@@ -46,6 +46,10 @@ function App() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const versionMemo = useMemo(() => {
+    return import.meta.env.VITE_BUILD || 'vdev';
+  }, []);
 
   return (
     <div className="bg-light min-vh-100 d-flex flex-column align-items-center justify-content-center py-5">
@@ -133,7 +137,7 @@ function App() {
           className="text-muted text-decoration-none transition-all footer-link"
           style={{ fontSize: '0.75rem', opacity: 0.6 }}
         >
-          {import.meta.env.VITE_BUILD || 'vdev'}
+          { versionMemo } - View on GitHub
         </a>
       </div>
 

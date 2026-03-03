@@ -1,0 +1,62 @@
+---
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: url-postgres
+    environment:
+      POSTGRES_USER: quarkus
+      POSTGRES_PASSWORD: quarkus
+      POSTGRES_DB: urldb
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quarkus -d urldb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  init-db:
+    image: ghcr.io/rmcampos/espresso-url/backend:latest
+    container_name: url-init-db
+    command: npx prisma db push
+    environment:
+      DATABASE_URL: postgresql://quarkus:quarkus@postgres:5432/urldb?schema=public
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  backend:
+    build:
+      context: ./backend
+    image: ghcr.io/rmcampos/espresso-url/backend:latest
+    container_name: url-backend
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://quarkus:quarkus@postgres:5432/urldb?schema=public
+      BUILD_VERSION: v1.0.0
+    depends_on:
+      postgres:
+        condition: service_healthy
+      init-db:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "node", "healthcheck.js"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_BUILD: v1.0.0
+        VITE_SERVER_URL: http://localhost:3000
+    image: ghcr.io/rmcampos/espresso-url/frontend:latest
+    container_name: url-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
